@@ -88,9 +88,9 @@ async def addprfx_hndl(msg:types.Message):
 		print('no reply')
 		return
 	if db is None:
-		await bot.send_message(cid, 'База данных не найдена.')
-		print('no db')
-		return
+		await bot.send_message(cid, 'База данных не найдена, но теперь она создана.')
+		print('created db for /addprefix')
+		db = {}
 	if uid in db or any(x in uid for x in await bot.get_chat_administrators(cid)):
 		await bot.send_message(cid, 'У данного человека уже есть префикс, либо он находится в базе данных.') #technically i could make writing to db in case if there's no
 		print(f'@{un}({uid}) already have prefix "{db.get(uid) if not db.get(uid) is None else None}"') #but it'll make possible to break the db by adding an actual admin.
@@ -128,7 +128,7 @@ async def delprfx_hndl(msg:types.Message):
 		return
 	if not uid in db:
 		await bot.send_message(cid, 'У данного человека нет префикса, либо его нет в базе данных.') #technically i could make writing to db in case if there's no prefix
-		print(f'@{un}({uid}) doesnt have prefix, but tryna to delete') #but mehh :p
+		print(f'@{un}({uid}) doesnt have prefix, but tryna to delete') #but mehh :p	
 		return
 
 	prev = db.pop(uid)
